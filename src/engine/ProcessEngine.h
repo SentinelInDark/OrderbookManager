@@ -23,6 +23,7 @@ namespace obm {
         void shutdown();
     private:
         void processCommand(std::shared_ptr<Command>&);
+        void deliveryEvents(const std::vector<std::shared_ptr<Event>>&);
 
     private:
         std::atomic<bool>   m_isRunning;

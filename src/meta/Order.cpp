@@ -17,15 +17,15 @@ namespace obm {
     }
 
     bool Order::isBuyerOrder() const {
-        return Order::OrderSide::BUY == this->m_side;
+        return OrderSide::BUY == this->m_side;
     }
 
     bool Order::isSellerOrder() const {
-        return Order::OrderSide::SELL == this->m_side;
+        return OrderSide::SELL == this->m_side;
     }
 
     bool Order::canBeReplaced() const {
-        return Order::OrderStatus::NEW == this->m_status;
+        return OrderStatus::NEW == this->m_status;
     }
 
     bool Order::isFullyFilled() const {

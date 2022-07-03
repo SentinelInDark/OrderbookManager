@@ -11,6 +11,7 @@
 #include <memory>
 
 #include "BookKey.h"
+#include "../../meta/Event.h"
 
 namespace obm {
     class AbstractBaseBook {
@@ -19,7 +20,7 @@ namespace obm {
 
         virtual ~AbstractBaseBook() = default;
 
-        void add(std::shared_ptr<Order>);
+        void add(std::shared_ptr<Order>, std::vector<std::shared_ptr<Event>> *);
         void replace(const std::shared_ptr<Order>&);
         void cancel(std::shared_ptr<Order>);
         std::shared_ptr<Order> find(const std::shared_ptr<Order>&);
@@ -28,8 +29,9 @@ namespace obm {
         void remove(const std::shared_ptr<Order>&);
         [[nodiscard]] std::shared_ptr<Order> findCandidateOrder() const;
 
-        void trade(const std::shared_ptr<Order>&);
+        void trade(const std::shared_ptr<Order>&, std::vector<std::shared_ptr<Event>> *);
         void cleanupOrder(const std::shared_ptr<Order> &orderPtr);
+        static void printTradeDetail(const std::shared_ptr<Order>&, quantityType, priceType);
 
         virtual void print() const = 0;
     protected:

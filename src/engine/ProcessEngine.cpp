@@ -27,17 +27,19 @@ namespace obm {
         this->m_commandActionMap[Command::CommandType::NEW] = [this](const std::shared_ptr<Command>& cmd){
             auto newOrderPtr = cmd->getOrder();
             SPDLOG_INFO("new order command: {}", newOrderPtr->toString());
+            std::vector<std::shared_ptr<Event>> events;
             if (cmd->isBuyerCommand()) {
-                m_buyerAccountBook.add(newOrderPtr);
-                m_sellerAccountBook.trade(newOrderPtr);
+                m_buyerAccountBook.add(newOrderPtr, &events);
+                m_sellerAccountBook.trade(newOrderPtr, &events);
                 m_buyerAccountBook.cleanupOrder(newOrderPtr);
             } else if (cmd->isSellerCommand()) {
-                m_sellerAccountBook.add(newOrderPtr);
-                m_buyerAccountBook.trade(newOrderPtr);
+                m_sellerAccountBook.add(newOrderPtr, &events);
+                m_buyerAccountBook.trade(newOrderPtr, &events);
                 m_sellerAccountBook.cleanupOrder(newOrderPtr);
             } else {
                 assert(0);
             }
+            deliveryEvents(events);
         };
 
         /// CANCEL
@@ -88,6 +90,12 @@ namespace obm {
             if (cmd) {
                 processCommand(cmd);
             }
+        }
+    }
+
+    void ProcessEngine::deliveryEvents(const std::vector<std::shared_ptr<Event>>& events) {
+        for (auto &event : events) {
+            this->m_eventWrapperQueue->enqueue(event);
         }
     }
 

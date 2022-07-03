@@ -47,6 +47,11 @@ namespace obm {
     }
 
     void EventWarehouse::persist(const std::shared_ptr<Event>& eventPtr) {
-
+        if (m_file && m_file.is_open()) {
+            const auto& str = eventPtr->encode();
+            m_file.write(str.data(), static_cast<long>(str.size()));
+            m_file.flush();
+            m_file.sync();
+        }
     }
 } /// end namespace obm

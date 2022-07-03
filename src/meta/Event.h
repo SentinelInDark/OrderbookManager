@@ -10,11 +10,16 @@
 namespace obm {
 
     struct Event {
-        orderIdType         m_orderId;
-        Order::OrderStatus  m_status;
-        Order::OrderSide    m_side;
-        priceType           m_price;
-        quantityType        m_quantity;
+        Event(orderIdType, OrderStatus, OrderSide, priceType, quantityType, quantityType);
+        std::string encode() const;
+        static std::shared_ptr<Event> decode(const std::string&);
+
+        orderIdType     m_orderId;
+        OrderStatus     m_status;
+        OrderSide       m_side;
+        priceType       m_price;
+        quantityType    m_quantity;
+        quantityType    m_filledQuantity;
     };
 
 } /// end namespace obm

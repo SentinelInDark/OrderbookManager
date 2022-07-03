@@ -51,9 +51,9 @@ namespace obm {
                 {"replace", CommandType::REPLACE}
         };
 
-        inline static const std::unordered_map<std::string_view, obm::Order::OrderSide> orderSideMap{
-                {"buy",  obm::Order::OrderSide::BUY},
-                {"sell", obm::Order::OrderSide::SELL}
+        inline static const std::unordered_map<std::string_view, obm::OrderSide> orderSideMap{
+                {"buy",  obm::OrderSide::BUY},
+                {"sell", obm::OrderSide::SELL}
         };
     };
 } /// end namespace obm

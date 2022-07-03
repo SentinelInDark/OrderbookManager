@@ -16,19 +16,20 @@ namespace obm {
     using quantityType = uint64_t;
     using priceType = uint64_t; /// TODO: price type is BigDecimal
 
-    struct Order {
-        enum class OrderStatus {
-            NEW,
-            PARTIALLY_FILLED,
-            FULLY_FILLED,
-            CANCELED,
-            REJECTED,
-        };
+    enum class OrderStatus : uint32_t {
+        NEW,
+        PARTIALLY_FILLED,
+        FULLY_FILLED,
+        CANCELED,
+        REJECTED,
+    };
 
-        enum class OrderSide {
-            BUY,
-            SELL,
-        };
+    enum class OrderSide :uint32_t {
+        BUY,
+        SELL,
+    };
+
+    struct Order {
         Order(orderIdType, OrderSide, priceType, quantityType);
         void printSummary() const;
         [[nodiscard]] bool isBuyerOrder() const;
