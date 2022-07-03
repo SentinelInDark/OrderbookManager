@@ -20,13 +20,13 @@ namespace obm {
         virtual ~AbstractBaseBook() = default;
 
         void add(std::shared_ptr<Order>);
-        void replace(std::shared_ptr<Order>);
+        void replace(const std::shared_ptr<Order>&);
         void cancel(std::shared_ptr<Order>);
         std::shared_ptr<Order> find(const std::shared_ptr<Order>&);
         static BookKey buildBookKeyFromOrder(const std::shared_ptr<Order>&);
         void remove(BookKey &);
         void remove(const std::shared_ptr<Order>&);
-        [[nodiscard]] std::shared_ptr<Order> findSuitableOrder() const;
+        [[nodiscard]] std::shared_ptr<Order> findCandidateOrder() const;
 
         virtual void print() const = 0;
     protected:

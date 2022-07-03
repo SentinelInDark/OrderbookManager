@@ -11,11 +11,12 @@ namespace obm {
             return key1.orderId > key2.orderId;
         }
         if (key1.price > key2.price) {
-            return m_isBuyerBook_;
+            return m_isBuyerBook;
         }
+        return !m_isBuyerBook;
     }
 
-    BookKeyComparator::BookKeyComparator(bool isBuyer) : m_isBuyerBook_(isBuyer) {}
+    BookKeyComparator::BookKeyComparator(bool isBuyer) : m_isBuyerBook(isBuyer) {}
 
     BookKey::BookKey(orderIdType orderId, priceType price, std::chrono::system_clock::time_point createTime) : orderId(
             orderId), price(price), createTime(createTime) {}

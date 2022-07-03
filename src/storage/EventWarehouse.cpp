@@ -8,7 +8,7 @@
 namespace obm {
     EventWarehouse::EventWarehouse(
             const std::string &filePath, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> queue) :
-            m_eventWrapperQueue(std::move(queue)) {
+            m_isRunning(false), m_eventWrapperQueue(std::move(queue)) {
         m_file.open(filePath.data(), std::ios::in | std::ios::out | std::ios::app);
     }
 
@@ -31,14 +31,12 @@ namespace obm {
             return;
         }
         m_isRunning = true;
-        SPDLOG_INFO("EventWarehouse is running");
         doWork();
     }
 
     void EventWarehouse::doWork() {
         while (true) {
             if (!m_isRunning) {
-                SPDLOG_INFO("EventWarehouse is shutting down");
                 break;
             }
             auto evt = m_eventWrapperQueue->dequeue();

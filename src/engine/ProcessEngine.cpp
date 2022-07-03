@@ -16,8 +16,8 @@ namespace obm {
     void ProcessEngine::initCommandActionMap() {
         /// PRINT
         this->m_commandActionMap[Command::CommandType::PRINT] = [this](const std::shared_ptr<Command>&){
-            m_buyerAccountBook.print();
             m_sellerAccountBook.print();
+            m_buyerAccountBook.print();
         };
 
         /// NEW
@@ -84,12 +84,11 @@ namespace obm {
     }
 
     void ProcessEngine::processCommand(std::shared_ptr<Command>& cmd) {
-        std::cout<<"receive "<<cmd->toString()<<std::endl;
         this->m_commandActionMap[cmd->getCommandType()](cmd);
     }
 
     void ProcessEngine::shutdown() {
         m_isRunning = false;
-        SPDLOG_WARN("Call ProcessEngine::shutdown to shutdown process engine");
+        SPDLOG_WARN("ProcessEngine is shutting down");
     }
 } /// end namespace obm

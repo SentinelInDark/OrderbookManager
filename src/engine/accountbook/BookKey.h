@@ -25,7 +25,7 @@ namespace obm {
         explicit BookKeyComparator(bool mIsBuyer);
         bool operator()(const BookKey &, const BookKey &) const;
     private:
-        bool m_isBuyerBook_;
+        bool m_isBuyerBook;
     };
 
 } // obm

@@ -11,7 +11,7 @@ namespace obm {
     }
 
     void Order::printSummary() const {
-        std::cout << this->m_quantity << '@' << this->m_price << std::endl;
+        std::cout << this->m_quantity << '@' << this->m_price;
     }
 
     bool Order::isBuyerOrder() const {

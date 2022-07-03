@@ -53,12 +53,12 @@ namespace obm {
             if (qtyPriceVector.size() != 2) {
                 return nullptr;
             }
-            priceType price;
-            if (!absl::SimpleAtoi(qtyPriceVector[0], &price)) {
+            quantityType quantity;
+            if (!absl::SimpleAtoi(qtyPriceVector[0], &quantity)) {
                 return nullptr;
             }
-            quantityType quantity;
-            if (!absl::SimpleAtoi(qtyPriceVector[1], &quantity)) {
+            priceType price;
+            if (!absl::SimpleAtoi(qtyPriceVector[1], &price)) {
                 return nullptr;
             }
             return std::make_shared<Command>(cmdType, std::make_shared<Order>(orderId, sideIter->second, price, quantity));

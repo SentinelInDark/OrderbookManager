@@ -22,7 +22,7 @@ namespace obm {
         this->remove(key);
     }
 
-    std::shared_ptr<Order> AbstractBaseBook::findSuitableOrder() const {
+    std::shared_ptr<Order> AbstractBaseBook::findCandidateOrder() const {
         if (m_bookMapPtr->empty()) {
             return nullptr;
         }
@@ -33,22 +33,23 @@ namespace obm {
         priceType pre = 0;
         for (auto& p : *m_bookMapPtr) {
             if (p.second->m_price != pre) {
-                std::cout<<std::endl;
+                std::cout<<std::endl<<"\t";
                 pre = p.second->m_price;
             } else {
-                std::cout<<" ";
+                std::cout<<"\t";
             }
             p.second->printSummary();
         }
-        std::cout<<std::endl;
     }
 
     void AbstractBaseBook::add(std::shared_ptr<Order> orderPtr) {
         BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
         m_bookMapPtr->try_emplace(key, orderPtr);
+        std::cout<<"New Order submitted, ID = "<<orderPtr->m_orderId<<std::endl<<"> ";
+        std::cout.flush();
     }
 
-    void AbstractBaseBook::replace(std::shared_ptr<Order> orderPtr) {
+    void AbstractBaseBook::replace(const std::shared_ptr<Order>& orderPtr) {
         BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
         auto iter = m_bookMapPtr->find(key);
         if (iter != m_bookMapPtr->end()) {
@@ -58,7 +59,7 @@ namespace obm {
 
     void AbstractBaseBook::cancel(std::shared_ptr<Order> orderPtr) {
         BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
-        m_bookMapPtr->try_emplace(key, orderPtr);
+        //m_bookMapPtr->try_emplace(key, orderPtr);
     }
 
     std::shared_ptr<Order> AbstractBaseBook::find(const std::shared_ptr<Order>& orderPtr) {

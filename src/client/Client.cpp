@@ -8,18 +8,18 @@
 #include "absl/strings/str_split.h"
 
 namespace obm {
-    Client::Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> q):m_isRunning_(false), m_commandQueue_(std::move(q)) {
+    Client::Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> q): m_isRunning(false), m_commandQueue(std::move(q)) {
     }
 
     void Client::shutdown() {
-        if (m_isRunning_) {
-            m_isRunning_ = false;
+        if (m_isRunning) {
+            m_isRunning = false;
             SPDLOG_INFO("Client thread is shutting down");
         }
     }
 
     void Client::run() {
-        this->m_isRunning_ = true;
+        this->m_isRunning = true;
         SPDLOG_INFO("Client thread is running.");
         printUsage();
         processCommand();
@@ -36,16 +36,17 @@ namespace obm {
             }
             auto cmd = buildCommand(command_sv);
             if (cmd) {
-                m_commandQueue_->enqueue(cmd);
+                m_commandQueue->enqueue(cmd);
             } else {
                 std::cout<<"Bad command: "<<inputCommandStr<<std::endl;
             }
-            printPrompt();
+            //printPrompt();
         }
     }
 
     void Client::printPrompt() {
         std::cout<<"> ";
+        std::cout.flush();
     }
 
     std::shared_ptr<Command> Client::buildCommand(const std::string_view &inputStr) const {

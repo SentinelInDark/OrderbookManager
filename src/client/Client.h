@@ -25,8 +25,8 @@ namespace obm {
         void processCommand() const;
         [[nodiscard]] std::shared_ptr<Command> buildCommand(const std::string_view &) const;
     private:
-        std::atomic<bool> m_isRunning_;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue_;
+        std::atomic<bool> m_isRunning;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue;
     };
 
 } /// end namespace obm
