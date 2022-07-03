@@ -30,12 +30,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # include dir
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSPDLOG_NO_EXCEPTIONS=ON")
 include_directories(third_party/spdlog/include)
-#include_directories(third_party/abseil-cpp)
+include_directories(third_party/abseil-cpp)
 
 # link dir
 link_directories(${CMAKE_BINARY_DIR}/build)
 # static link libgcc and libstdc++
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+
+# add absl lib
+option(ABSL_PROPAGATE_CXX_STD "ABSL_PROPAGATE_CXX_STD" ON)
+add_subdirectory(third_party/abseil-cpp)
+set(ABSL_LIBS absl::strings absl::base absl::str_format)
 
 set(FLAG_LIST
         -Wall

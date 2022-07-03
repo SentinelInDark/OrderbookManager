@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+#cmake_minimum_required(VERSION 3.22)
 project(OrderBookManager)
 
 file(GLOB_RECURSE SRC_FILE_LIST
@@ -10,3 +10,4 @@ file(GLOB_RECURSE SRC_FILE_LIST
 #file(GLOB_RECURSE SRC_FILE_LIST "*.cpp" "*.h" "*.hpp" "*.cc")
 
 add_executable(OrderBookManager ${SRC_FILE_LIST})
+target_link_libraries(OrderBookManager ${ABSL_LIBS})

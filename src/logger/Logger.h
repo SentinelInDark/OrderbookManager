@@ -7,6 +7,8 @@
 
 #include "spdlog/spdlog.h"
 
-void initLogger(const char*);
+namespace obm {
+    void initLogger(const char*);
+} /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_LOGGER_H

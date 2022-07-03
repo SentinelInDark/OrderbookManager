@@ -19,13 +19,13 @@ namespace obm {
         static void printUsage() ;
         void run();
         void shutdown();
-        std::shared_ptr<Command> buildCommand(const std::string &);
+        std::shared_ptr<Command> buildCommand(const std::string_view &);
 
     private:
         bool validateCommand(const std::string&) const;
     private:
-        std::atomic<bool> is_running_;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> command_queue_;
+        std::atomic<bool> m_isRunning_;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue_;
     };
 
 } /// end namespace obm

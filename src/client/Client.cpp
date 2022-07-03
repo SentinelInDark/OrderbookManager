@@ -3,34 +3,37 @@
 //
 #include <iostream>
 #include "Client.h"
-#include "../logger/logger.h"
+#include "../logger/Logger.h"
+
+#include "absl/strings/numbers.h"
+#include "absl/strings/str_split.h"
 
 namespace obm {
-    Client::Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> q):is_running_(false), command_queue_(std::move(q)) {
+    Client::Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> q):m_isRunning_(false), m_commandQueue_(std::move(q)) {
     }
 
     void Client::shutdown() {
-        if (is_running_) {
-            is_running_ = false;
+        if (m_isRunning_) {
+            m_isRunning_ = false;
             SPDLOG_INFO("Client thread is shutting down");
         }
     }
 
     void Client::run() {
-        std::string inputStr;
-        while (getline(std::cin, inputStr)) {
-            if (inputStr.empty()) {
+        std::string inputCommandStr;
+        while (getline(std::cin, inputCommandStr)) {
+            auto commandStr_v = absl::StripTrailingAsciiWhitespace(inputCommandStr);
+            if (commandStr_v.empty()) {
                 continue;
             }
-            //cmd = absl::StripTrailingAsciiWhitespace(cmd);
-            auto cmd = buildCommand(inputStr);
+            auto cmd = buildCommand(commandStr_v);
             if (cmd) {
-                this->command_queue_->enqueue(cmd);
+                m_commandQueue_->enqueue(cmd);
             }
         }
     }
 
-    std::shared_ptr<Command> Client::buildCommand(const std::string &inputStr) {
+    std::shared_ptr<Command> Client::buildCommand(const std::string_view &inputStr) {
         return nullptr;
     }
 
@@ -41,7 +44,7 @@ namespace obm {
     void Client::printUsage() {
         std::cout
                 <<"usage: [New|Cancel|Replace] [orderId] [buy|sell] [quantity@price]\n"
-                <<"\nex:\n"
+                <<"\nEx:\n"
                 <<"=====================================================\n"
                 <<"\tNew 1 buy 2@100\t\tNew 1 sell 2@100\n"
                 <<"\tCancel 1 buy 2@100\t\tCancel 1 sell 2@100\n"

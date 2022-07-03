@@ -2,12 +2,12 @@
 // Created by Liam Zhang on 2022/7/2.
 //
 #include <unistd.h>
-#include "logger/logger.h"
+#include "logger/Logger.h"
 #include "app/OrderbookManager.h"
 
 int main(int argc, char *argv[]) {
     const char *default_args[] = {"stdout", "/tmp/data"};
-    initLogger(argc > 1 ? argv[1] : default_args[0]);
+    obm::initLogger(argc > 1 ? argv[1] : default_args[0]);
 
     SPDLOG_INFO("OrderbookManager is running, pid={}", getpid());
 
