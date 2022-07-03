@@ -14,7 +14,5 @@ namespace obm {
     void BuyerAccountBook::print() const {
         std::cout<<"bid:";
         AbstractBaseBook::print();
-        std::cout<<std::endl<<"> ";
-        std::cout.flush();
     }
 } /// end namespace obm

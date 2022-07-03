@@ -18,6 +18,8 @@ namespace obm {
         this->m_commandActionMap[Command::CommandType::PRINT] = [this](const std::shared_ptr<Command>&){
             m_sellerAccountBook.print();
             m_buyerAccountBook.print();
+            std::cout<<"> ";
+            std::cout.flush();
         };
 
         /// NEW

@@ -14,6 +14,5 @@ namespace obm {
     void SellerAccountBook::print() const {
         std::cout<<"ask:";
         AbstractBaseBook::print();
-        std::cout<<std::endl;
     }
 } /// end namespace obm

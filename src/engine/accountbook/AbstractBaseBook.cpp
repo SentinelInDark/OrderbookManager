@@ -40,6 +40,7 @@ namespace obm {
             }
             p.second->printSummary();
         }
+        std::cout<<std::endl;
     }
 
     void AbstractBaseBook::add(std::shared_ptr<Order> orderPtr) {

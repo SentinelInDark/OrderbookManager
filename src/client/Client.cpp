@@ -39,8 +39,8 @@ namespace obm {
                 m_commandQueue->enqueue(cmd);
             } else {
                 std::cout<<"Bad command: "<<inputCommandStr<<std::endl;
+                printPrompt();
             }
-            //printPrompt();
         }
     }
 
