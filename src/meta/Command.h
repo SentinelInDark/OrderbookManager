@@ -20,32 +20,39 @@ namespace obm {
             REPLACE,
         };
     public:
-        Command(CommandType commandType, std::unique_ptr<Order> orderPtr);
+        Command(CommandType commandType, std::shared_ptr<Order> orderPtr);
         ~Command();
-        Command(const Command&) = delete;
+        Command(const Command &) = delete;
         Command(Command &&) = delete;
-        Command& operator=(const Command &) = delete;
-        Command& operator=(Command &&) = delete;
+        Command &operator=(const Command &) = delete;
+        Command &operator=(Command &&) = delete;
+
         [[nodiscard]] std::string toString() const;
+        [[nodiscard]] bool isBuyerCommand() const;
+        [[nodiscard]] bool isSellerCommand() const;
+        [[nodiscard]] std::shared_ptr<Order> getOrder() const;
+        [[nodiscard]] CommandType getCommandType() const;
+
     public:
-        static std::shared_ptr<Command> buildFromStr(const std::string_view&);
+        static std::shared_ptr<Command> buildFromStr(const std::string_view &);
+
     private:
-        static bool isPrintCommand(const std::string_view&);
-        static bool isTransactionCommand(const std::string_view&);
+        inline static bool isPrintCommand(const std::string_view &);
+
     private:
-        CommandType             m_commandType_;
-        std::unique_ptr<Order>  m_orderPtr_;
+        CommandType m_commandType;
+        std::shared_ptr<Order> m_orderPtr;
 
         inline static const std::string PRINT_BOOK_STR = "print book";
 
         inline static const std::unordered_map<std::string_view, CommandType> cmdTypeMap{
-            {"new", CommandType::NEW},
-            {"cancel", CommandType::CANCEL},
-            {"replace", CommandType::REPLACE}
+                {"new",     CommandType::NEW},
+                {"cancel",  CommandType::CANCEL},
+                {"replace", CommandType::REPLACE}
         };
 
         inline static const std::unordered_map<std::string_view, obm::Order::OrderSide> orderSideMap{
-                {"buy", obm::Order::OrderSide::BUY},
+                {"buy",  obm::Order::OrderSide::BUY},
                 {"sell", obm::Order::OrderSide::SELL}
         };
     };

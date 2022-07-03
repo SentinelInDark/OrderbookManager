@@ -30,14 +30,19 @@ namespace obm {
             SELL,
         };
         Order(orderIdType, OrderSide, priceType, quantityType);
+        void printSummary() const;
+        [[nodiscard]] bool isBuyerOrder() const;
+        [[nodiscard]] bool isSellerOrder() const;
+        [[nodiscard]] bool canBeReplaced() const;
+        [[nodiscard]] std::string getStatusStr() const;
 
-        orderIdType     m_orderId_;
-        OrderStatus     m_status_;
-        OrderSide       m_side_;
-        priceType       m_price_;
-        quantityType    m_quantity_;
-        quantityType    m_leaves_;
-        std::chrono::system_clock::time_point   m_createTime_;
+        orderIdType     m_orderId;
+        OrderStatus     m_status;
+        OrderSide       m_side;
+        priceType       m_price;
+        quantityType    m_quantity;
+        quantityType    m_leaves;
+        std::chrono::system_clock::time_point   m_createTime;
     };
 
 } /// end namespace obm

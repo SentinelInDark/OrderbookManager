@@ -6,40 +6,56 @@
 #include "../logger/Logger.h"
 
 namespace obm {
-    OrderbookManager::OrderbookManager(const std::string &storePath) : m_isRunning_(false) {
-        m_commandQueue_ = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<Command>>>();
-        mEventWrapperQueue_ = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>>();
-        m_client_ = std::make_unique<Client>(m_commandQueue_);
-        m_processEngine_ = std::make_unique<ProcessEngine>(m_commandQueue_, mEventWrapperQueue_);
+    OrderbookManager::OrderbookManager(const std::string &storePath) : m_isRunning(false) {
+        m_commandQueue = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<Command>>>();
+        m_eventQueue = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>>();
+        m_client = std::make_unique<Client>(m_commandQueue);
+        m_processEngine = std::make_unique<ProcessEngine>(m_commandQueue, m_eventQueue);
+        m_eventWarehouse = std::make_unique<EventWarehouse>(storePath, m_eventQueue);
     }
 
     OrderbookManager::~OrderbookManager() = default;
 
     void OrderbookManager::run() {
-        if (m_isRunning_) {
+        if (m_isRunning) {
             SPDLOG_WARN("OrderbookManager has already been running");
             return;
         }
-        m_isRunning_ = true;
+        m_isRunning = true;
         SPDLOG_INFO("OrderbookManager is running");
 
-        /// start client thread
-        this->m_clientThread_ = std::thread([this]() {
-            pthread_setname_np("ClientThread");
-            this->m_client_->run();
+        /// start event warehouse engine thread
+        this->m_eventWarehouseThread = std::thread([this]() {
+            pthread_setname_np("EventWarehouse");
+            this->m_eventWarehouse->run();
         });
 
         /// start process engine thread
-        this->mCommandProcessThread_ = std::thread([this]() {
+        this->m_commandProcessThread = std::thread([this]() {
             pthread_setname_np("ProcessThread");
-            this->m_processEngine_->run();
+            this->m_processEngine->run();
         });
-        m_clientThread_.join();
-        mCommandProcessThread_.join();
+
+        /// start client thread
+        this->m_clientThread = std::thread([this]() {
+            pthread_setname_np("ClientThread");
+            this->m_client->run();
+        });
+
+        m_clientThread.join();
+        m_commandProcessThread.join();
+        m_eventWarehouseThread.join();
     }
 
     void OrderbookManager::shutdown() const {
-        m_client_->shutdown();
-        m_processEngine_->shutdown();
+        m_client->shutdown();
+        if (!m_commandQueue->empty()) {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        m_processEngine->shutdown();
+        if (!m_eventQueue->empty()) {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        m_eventWarehouse->shutdown();
     }
 } /// end namespace obm

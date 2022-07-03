@@ -2,12 +2,14 @@
 // Created by Liam Zhang on 2022/7/2.
 //
 #include "Command.h"
+
+#include <utility>
 #include "../utils/StringUtils.h"
 #include "absl/strings/numbers.h"
 
 namespace obm {
 
-    Command::Command(CommandType commandType, std::unique_ptr<Order> orderPtr) : m_commandType_(commandType), m_orderPtr_(std::move(orderPtr)){
+    Command::Command(CommandType commandType, std::shared_ptr<Order> orderPtr) : m_commandType(commandType), m_orderPtr(std::move(orderPtr)){
 
     }
 
@@ -45,7 +47,7 @@ namespace obm {
             if (!absl::SimpleAtoi(cmdVector[3], &price)) {
                 return nullptr;
             }
-            return std::make_shared<Command>(cmdType, std::make_unique<Order>(orderId, sideIter->second, price, 0));
+            return std::make_shared<Command>(cmdType, std::make_shared<Order>(orderId, sideIter->second, price, 0));
         } else {
             auto qtyPriceVector = obm::split(cmdVector[3], '@');
             if (qtyPriceVector.size() != 2) {
@@ -59,29 +61,41 @@ namespace obm {
             if (!absl::SimpleAtoi(qtyPriceVector[1], &quantity)) {
                 return nullptr;
             }
-            return std::make_shared<Command>(cmdType, std::make_unique<Order>(orderId, sideIter->second, price, quantity));
+            return std::make_shared<Command>(cmdType, std::make_shared<Order>(orderId, sideIter->second, price, quantity));
         }
     }
 
-    bool Command::isPrintCommand(const std::string_view& sv) {
+    inline bool Command::isPrintCommand(const std::string_view& sv) {
         return sv == PRINT_BOOK_STR;
     }
 
-    bool Command::isTransactionCommand(const std::string_view& sv) {
-        return !isPrintCommand(sv);
+    bool Command::isBuyerCommand() const {
+        return m_orderPtr && m_orderPtr->isBuyerOrder();
+    }
+
+    bool Command::isSellerCommand() const {
+        return m_orderPtr && m_orderPtr->isSellerOrder();
+    }
+
+    std::shared_ptr<Order> Command::getOrder() const {
+        return m_orderPtr;
+    }
+
+    Command::CommandType Command::getCommandType() const {
+        return m_commandType;
     }
 
     std::string Command::toString() const {
-        if (m_commandType_ == CommandType::NEW) {
+        if (m_commandType == CommandType::NEW) {
             return "NEW";
         }
-        if (m_commandType_ == CommandType::CANCEL) {
+        if (m_commandType == CommandType::CANCEL) {
             return "CANCEL";
         }
-        if (m_commandType_ == CommandType::PRINT) {
+        if (m_commandType == CommandType::PRINT) {
             return "print book";
         }
-        if (m_commandType_ == CommandType::REPLACE) {
+        if (m_commandType == CommandType::REPLACE) {
             return "REPLACE";
         }
         return "unknown";

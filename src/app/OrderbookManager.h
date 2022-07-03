@@ -12,6 +12,7 @@
 #include "../meta/Command.h"
 #include "../client/Client.h"
 #include "../engine/ProcessEngine.h"
+#include "../storage/EventWarehouse.h"
 
 namespace obm /** orderbookmanager */{
     class OrderbookManager final {
@@ -33,21 +34,19 @@ namespace obm /** orderbookmanager */{
 //        void startClientLoop();
 //
     private:
-        std::thread m_clientThread_;
-        std::thread mCommandProcessThread_;
-//        std::thread mEventStoreLoopThread;
-//
-//        std::unique_ptr<OrderProcessor> mOrderProcessorLoop;
-//        std::unique_ptr<EventStore> mEventStoreLoop;
-        std::unique_ptr<Client> m_client_;
-        std::unique_ptr<ProcessEngine> m_processEngine_;
-//
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue_;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> mEventWrapperQueue_;
-//        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<MatchEvent>>> mReplyQueue;
-//
-        bool m_isRunning_;
-//        std::string mStorePath;
+        std::thread m_clientThread;
+        std::thread m_commandProcessThread;
+        std::thread m_eventWarehouseThread;
+
+        std::unique_ptr<EventWarehouse> m_eventWarehouse;
+        std::unique_ptr<Client> m_client;
+        std::unique_ptr<ProcessEngine> m_processEngine;
+
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> m_eventQueue;
+
+        bool m_isRunning;
+        std::string mStorePath;
     };
 } /// end namespace obm
 
