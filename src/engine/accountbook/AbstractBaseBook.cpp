@@ -29,6 +29,30 @@ namespace obm {
         return m_bookMapPtr->begin()->second;
     }
 
+    void AbstractBaseBook::trade(const std::shared_ptr<Order>& newOrderPtr) {
+        while (true) {
+            auto candidateOrder = this->findCandidateOrder();
+            if (!canTrade(candidateOrder, newOrderPtr)) {
+                break;
+            }
+            auto qty = std::min(candidateOrder->m_leaves, newOrderPtr->m_leaves);
+            newOrderPtr->decreaseCount(qty);
+            candidateOrder->decreaseCount(qty);
+            if (candidateOrder->isFullyFilled()) {
+                this->remove(candidateOrder);
+            }
+            if (newOrderPtr->isFullyFilled()) {
+                break;
+            }
+        }
+    }
+
+    void AbstractBaseBook::cleanupOrder(const std::shared_ptr<Order>& orderPtr) {
+        if (orderPtr && orderPtr->isFullyFilled()) {
+            this->remove(orderPtr);
+        }
+    }
+
     void AbstractBaseBook::print() const {
         priceType pre = 0;
         for (auto& p : *m_bookMapPtr) {

@@ -28,7 +28,12 @@ namespace obm {
         void remove(const std::shared_ptr<Order>&);
         [[nodiscard]] std::shared_ptr<Order> findCandidateOrder() const;
 
+        void trade(const std::shared_ptr<Order>&);
+        void cleanupOrder(const std::shared_ptr<Order> &orderPtr);
+
         virtual void print() const = 0;
+    protected:
+        virtual bool canTrade(const std::shared_ptr<Order>&, const std::shared_ptr<Order>&) const = 0;
     protected:
         std::unique_ptr<std::map<BookKey, std::shared_ptr<Order>, BookKeyComparator>> m_bookMapPtr;
     };

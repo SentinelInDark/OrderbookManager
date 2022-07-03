@@ -20,6 +20,7 @@ namespace obm {
         BuyerAccountBook& operator==(BuyerAccountBook &&) = delete;
 
         void print() const override;
+        bool canTrade(const std::shared_ptr<Order>&, const std::shared_ptr<Order>&) const override;
     };
 
 } /// end namespace obm

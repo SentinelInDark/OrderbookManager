@@ -14,16 +14,13 @@ namespace obm {
         SellerAccountBook();
 
         ~SellerAccountBook() override = default;
-
         SellerAccountBook(const SellerAccountBook &) = delete;
-
         SellerAccountBook(SellerAccountBook &&) = delete;
-
         SellerAccountBook &operator=(const SellerAccountBook &) = delete;
-
         SellerAccountBook &operator==(SellerAccountBook &&) = delete;
 
         void print() const override;
+        bool canTrade(const std::shared_ptr<Order>&, const std::shared_ptr<Order>&) const override;
     };
 
 } /// end namespace obm

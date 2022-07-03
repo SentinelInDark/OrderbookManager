@@ -10,7 +10,7 @@
 namespace obm {
     void initLogger(const char* file_name) {
         spdlog::flush_on(spdlog::level::info);
-        spdlog::set_pattern("[%D %H:%M:%S.%F] [%s:%# %!] [%l] [thread %t] %v");
+        spdlog::set_pattern("[%D %H:%M:%S.%F] [%s:%#] [%l] [thread %t] %v");
 
         if (std::strcmp("stdout", file_name) == 0) {
             spdlog::stdout_logger_mt(file_name);

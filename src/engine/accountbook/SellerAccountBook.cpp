@@ -15,4 +15,8 @@ namespace obm {
         std::cout<<"ask:";
         AbstractBaseBook::print();
     }
+
+    bool SellerAccountBook::canTrade(const std::shared_ptr<Order>& orderPtr, const std::shared_ptr<Order>& newOrderPtr) const {
+        return orderPtr && orderPtr->m_price <= newOrderPtr->m_price;
+    }
 } /// end namespace obm

@@ -34,7 +34,11 @@ namespace obm {
         [[nodiscard]] bool isBuyerOrder() const;
         [[nodiscard]] bool isSellerOrder() const;
         [[nodiscard]] bool canBeReplaced() const;
+        [[nodiscard]] bool isFullyFilled() const;
         [[nodiscard]] std::string getStatusStr() const;
+        [[nodiscard]] std::string getSideStr() const;
+        [[nodiscard]] std::string toString() const;
+        void decreaseCount(quantityType);
 
         orderIdType     m_orderId;
         OrderStatus     m_status;

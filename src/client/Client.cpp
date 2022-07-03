@@ -33,6 +33,7 @@ namespace obm {
         while (getline(std::cin, inputCommandStr)) {
             auto command_sv = absl::StripTrailingAsciiWhitespace(removeRedundantSpaceAndToLowerCase(inputCommandStr));
             if (command_sv.empty()) {
+                printPrompt();
                 continue;
             }
             auto cmd = buildCommand(command_sv);

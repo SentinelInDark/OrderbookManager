@@ -17,6 +17,7 @@ namespace obm {
     void ProcessEngine::initCommandActionMap() {
         /// PRINT
         this->m_commandActionMap[Command::CommandType::PRINT] = [this](const std::shared_ptr<Command>&){
+            SPDLOG_INFO("Print book command");
             m_sellerAccountBook.print();
             m_buyerAccountBook.print();
             printPrompt();
@@ -24,11 +25,16 @@ namespace obm {
 
         /// NEW
         this->m_commandActionMap[Command::CommandType::NEW] = [this](const std::shared_ptr<Command>& cmd){
-            auto orderPtr = cmd->getOrder();
+            auto newOrderPtr = cmd->getOrder();
+            SPDLOG_INFO("new order command: {}", newOrderPtr->toString());
             if (cmd->isBuyerCommand()) {
-                m_buyerAccountBook.add(orderPtr);
+                m_buyerAccountBook.add(newOrderPtr);
+                m_sellerAccountBook.trade(newOrderPtr);
+                m_buyerAccountBook.cleanupOrder(newOrderPtr);
             } else if (cmd->isSellerCommand()) {
-                m_sellerAccountBook.add(orderPtr);
+                m_sellerAccountBook.add(newOrderPtr);
+                m_buyerAccountBook.trade(newOrderPtr);
+                m_sellerAccountBook.cleanupOrder(newOrderPtr);
             } else {
                 assert(0);
             }
