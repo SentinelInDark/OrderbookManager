@@ -5,7 +5,6 @@
 #include "Client.h"
 #include "../logger/Logger.h"
 #include "../utils/StringUtils.h"
-#include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
 
 namespace obm {
@@ -31,15 +30,15 @@ namespace obm {
 
         std::string inputCommandStr;
         while (getline(std::cin, inputCommandStr)) {
-            /// transform the command string to lowercase string
-            std::transform(inputCommandStr.begin(), inputCommandStr.end(), inputCommandStr.begin(),tolower);
-            auto command_sv = absl::StripTrailingAsciiWhitespace(removeRedundantSpace(inputCommandStr));
+            auto command_sv = absl::StripTrailingAsciiWhitespace(removeRedundantSpaceAndToLowerCase(inputCommandStr));
             if (command_sv.empty()) {
                 continue;
             }
             auto cmd = buildCommand(command_sv);
             if (cmd) {
                 m_commandQueue_->enqueue(cmd);
+            } else {
+                std::cout<<"Bad command: "<<inputCommandStr<<std::endl;
             }
             printPrompt();
         }
@@ -55,13 +54,16 @@ namespace obm {
 
     void Client::printUsage() {
         std::cout
-                <<"\nusage: [New|Cancel|Replace] [orderId] [buy|sell] [quantity@price]\n"
+                <<"\nusage: \n"
+                <<"transaction command: [New|Cancel|Replace] [orderId] [buy|sell] [quantity@price]\n"
+                <<"query command: print book\n"
                 <<"Ex:\n"
-                <<"===========================================================\n"
+                <<"=================================================================\n"
                 <<"\tNew 1 buy 2@100   \t\tNew 1 sell 2@100\n"
-                <<"\tCancel 1 buy 2@100\t\tCancel 1 sell 2@100\n"
-                <<"\tReplace 1 buy 2@100\t\tCancel 1 sell 2@100\n"
-                <<"==========================================================="
+                <<"\tCancel 1 buy 200  \t\tCancel 1 sell 200\n"
+                <<"\tReplace 1 buy 2@100\t\tReplace 1 sell 2@100\n"
+                <<"\tprint book\n"
+                <<"================================================================="
                 <<std::endl;
     }
 } /// end namespace obm
