@@ -10,7 +10,7 @@ namespace obm {
         m_commandQueue = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<Command>>>();
         m_eventQueue = std::make_shared<MpscDoubleBufferQueue<std::shared_ptr<Event>>>();
         m_client = std::make_unique<Client>(m_commandQueue);
-        m_processEngine = std::make_unique<ProcessEngine>(m_commandQueue, m_eventQueue);
+        m_processEngine = std::make_unique<ProcessEngine>(storePath, m_commandQueue, m_eventQueue);
         m_eventWarehouse = std::make_unique<EventWarehouse>(storePath, m_eventQueue);
     }
 

@@ -16,7 +16,7 @@ namespace obm {
     using quantityType = uint64_t;
     using priceType = uint64_t; /// TODO: price type is BigDecimal
 
-    enum class OrderStatus : uint32_t {
+    enum class OrderStatus : uint64_t {
         NEW,
         PARTIALLY_FILLED,
         FULLY_FILLED,
@@ -24,7 +24,7 @@ namespace obm {
         REJECTED,
     };
 
-    enum class OrderSide :uint32_t {
+    enum class OrderSide :uint64_t {
         BUY,
         SELL,
     };

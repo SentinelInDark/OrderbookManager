@@ -2,16 +2,42 @@
 // Created by Liam Zhang on 2022/7/3.
 //
 #include <iostream>
+#include <fstream>
+#include <utility>
 #include "ProcessEngine.h"
 #include "../logger/Logger.h"
 #include "../utils/CommonUtils.h"
 
 namespace obm {
-    ProcessEngine::ProcessEngine(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> cmdQueue,
+    ProcessEngine::ProcessEngine(const std::string& evtDataPath, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> cmdQueue,
                                  std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> evtQueue)
             : m_isRunning(false), m_commandQueue(std::move(cmdQueue)),
               m_eventWrapperQueue(std::move(evtQueue)) {
         initCommandActionMap();
+        rebuildState(evtDataPath);
+    }
+
+    void ProcessEngine::rebuildState(const std::string & eventDataPath) {
+        std::ifstream inFile(eventDataPath);
+        if (!inFile.is_open()) {
+            SPDLOG_WARN("Data file {} can not be opened", eventDataPath);
+            return;
+        }
+        std::string eventStr;
+
+        while (getline(inFile, eventStr)) {
+            std::shared_ptr<Event> eventPtr = Event::decode(eventStr);
+            buildState(eventPtr);
+        }
+        inFile.close();
+    }
+
+    void ProcessEngine::buildState(const std::shared_ptr<Event>& eventPtr) {
+        if (eventPtr->m_side == OrderSide::BUY) {
+            m_buyerAccountBook.restore(eventPtr);
+        } else {
+            m_sellerAccountBook.restore(eventPtr);
+        }
     }
 
     void ProcessEngine::initCommandActionMap() {
@@ -39,6 +65,7 @@ namespace obm {
             } else {
                 assert(0);
             }
+            printPrompt();
             deliveryEvents(events);
         };
 

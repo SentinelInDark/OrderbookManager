@@ -16,12 +16,14 @@ namespace obm {
 
     class ProcessEngine {
     public:
-        ProcessEngine(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>>,
+        ProcessEngine(const std::string& , std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>>,
                       std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>>);
-        void initCommandActionMap();
         void run();
         void shutdown();
     private:
+        void initCommandActionMap();
+        void rebuildState(const std::string &);
+        void buildState(const std::shared_ptr<Event>&);
         void processCommand(std::shared_ptr<Command>&);
         void deliveryEvents(const std::vector<std::shared_ptr<Event>>&);
 

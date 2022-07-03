@@ -8,7 +8,7 @@ namespace obm {
     bool BookKeyComparator::operator()(const BookKey &key1, const BookKey &key2) const {
         if (key1.price == key2.price) {
             /// TODO: consider to compare by order create time
-            return key1.orderId > key2.orderId;
+            return key1.orderId < key2.orderId;
         }
         if (key1.price > key2.price) {
             return m_isBuyerBook;

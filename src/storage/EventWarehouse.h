@@ -28,8 +28,9 @@ namespace obm {
         void doWork();
         void persist(const std::shared_ptr<Event>&);
     private:
-        std::fstream        m_file;
         std::atomic<bool>   m_isRunning;
+        std::string         m_filePath;
+        std::fstream        m_file;
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventWrapperQueue;
     };
 

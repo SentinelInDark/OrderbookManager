@@ -1,6 +1,7 @@
 //
 // Created by Liam Zhang on 2022/7/3.
 //
+
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_format.h"
 #include "Event.h"
@@ -14,7 +15,7 @@ namespace obm {
     }
 
     std::string Event::encode() const {
-        return absl::StrFormat("%ld|%ld|%ld|%ld|%ld|%ld\n", m_orderId, m_status, m_side,
+        return absl::StrFormat("%ld|%ld|%ld|%ld|%ld|%ld\n", m_orderId, static_cast<uint64_t>(m_status), static_cast<uint64_t>(m_side),
                                m_price, m_quantity, m_filledQuantity);
     }
 
@@ -29,8 +30,9 @@ namespace obm {
         if (!absl::SimpleAtoi(sv[index++], &status)) {
             return nullptr;
         }
+
         std::underlying_type<OrderSide>::type side = 0;
-        if (!absl::SimpleAtoi(sv[index++], &status)) {
+        if (!absl::SimpleAtoi(sv[index++], &side)) {
             return nullptr;
         }
         priceType price;

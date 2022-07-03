@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "AbstractBaseBook.h"
+#include "../../logger/Logger.h"
 #include "absl/strings/str_format.h"
 
 namespace obm {
@@ -87,13 +88,40 @@ namespace obm {
         std::cout<<std::endl;
     }
 
+    void AbstractBaseBook::restore(const std::shared_ptr<Event> &eventPtr) {
+        auto orderPtr = std::make_shared<Order>(eventPtr->m_orderId, eventPtr->m_side, eventPtr->m_price, eventPtr->m_quantity);
+        switch (eventPtr->m_status) {
+            case OrderStatus::NEW: {
+                SPDLOG_INFO("restore - new, order id {}, side {}, price {}, qty {}", orderPtr->m_orderId, orderPtr->m_side, orderPtr->m_price, orderPtr->m_quantity);
+                this->add(orderPtr, nullptr);
+                break;
+            }
+            case OrderStatus::FULLY_FILLED:
+            case OrderStatus::CANCELED: {
+                this->remove(orderPtr);
+                break;
+            }
+            case OrderStatus::PARTIALLY_FILLED: {
+                auto curOrderPtr = this->find(orderPtr);
+                if (curOrderPtr) {
+                    SPDLOG_INFO("update - order id {}, side {}, price {}, qty {}", orderPtr->m_orderId, orderPtr->m_side, orderPtr->m_price, orderPtr->m_quantity);
+                    curOrderPtr->m_quantity = orderPtr->m_quantity;
+                }
+                break;
+            }
+            case OrderStatus::REJECTED: {
+                break;
+            }
+        }
+    }
+
     void AbstractBaseBook::add(std::shared_ptr<Order> orderPtr, std::vector<std::shared_ptr<Event>> *pEvents) {
         BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
         m_bookMapPtr->try_emplace(key, orderPtr);
-        pEvents->push_back(std::make_shared<Event>(orderPtr->m_orderId, orderPtr->m_status, orderPtr->m_side, orderPtr->m_price, orderPtr->m_quantity, 0));
-
-        std::cout<<"New Order submitted, ID = "<<orderPtr->m_orderId<<std::endl<<"> ";
-        std::cout.flush();
+        if (pEvents) {
+            pEvents->push_back(std::make_shared<Event>(orderPtr->m_orderId, orderPtr->m_status, orderPtr->m_side, orderPtr->m_price, orderPtr->m_quantity, 0));
+            std::cout<<"New Order submitted, ID = "<<orderPtr->m_orderId<<std::endl;
+        }
     }
 
     void AbstractBaseBook::replace(const std::shared_ptr<Order>& orderPtr) {

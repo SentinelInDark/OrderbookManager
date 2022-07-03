@@ -11,7 +11,7 @@ namespace obm {
 
     struct Event {
         Event(orderIdType, OrderStatus, OrderSide, priceType, quantityType, quantityType);
-        std::string encode() const;
+        [[nodiscard]] std::string encode() const;
         static std::shared_ptr<Event> decode(const std::string&);
 
         orderIdType     m_orderId;

@@ -20,6 +20,7 @@ namespace obm {
 
         virtual ~AbstractBaseBook() = default;
 
+        void restore(const std::shared_ptr<Event> &);
         void add(std::shared_ptr<Order>, std::vector<std::shared_ptr<Event>> *);
         void replace(const std::shared_ptr<Order>&);
         void cancel(std::shared_ptr<Order>);
