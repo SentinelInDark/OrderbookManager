@@ -4,6 +4,7 @@
 #include <iostream>
 #include "ProcessEngine.h"
 #include "../logger/Logger.h"
+#include "../utils/CommonUtils.h"
 
 namespace obm {
     ProcessEngine::ProcessEngine(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> cmdQueue,
@@ -18,8 +19,7 @@ namespace obm {
         this->m_commandActionMap[Command::CommandType::PRINT] = [this](const std::shared_ptr<Command>&){
             m_sellerAccountBook.print();
             m_buyerAccountBook.print();
-            std::cout<<"> ";
-            std::cout.flush();
+            printPrompt();
         };
 
         /// NEW

@@ -5,6 +5,7 @@
 #include "Client.h"
 #include "../logger/Logger.h"
 #include "../utils/StringUtils.h"
+#include "../utils/CommonUtils.h"
 #include "absl/strings/str_split.h"
 
 namespace obm {
@@ -42,11 +43,6 @@ namespace obm {
                 printPrompt();
             }
         }
-    }
-
-    void Client::printPrompt() {
-        std::cout<<"> ";
-        std::cout.flush();
     }
 
     std::shared_ptr<Command> Client::buildCommand(const std::string_view &inputStr) const {

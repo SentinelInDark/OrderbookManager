@@ -21,7 +21,6 @@ namespace obm {
         void shutdown();
 
     private:
-        static void printPrompt() ;
         void processCommand() const;
         [[nodiscard]] std::shared_ptr<Command> buildCommand(const std::string_view &) const;
     private:
