@@ -43,7 +43,7 @@ namespace obm /** orderbookmanager */{
         std::unique_ptr<ProcessEngine> m_processEngine;
 
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> m_eventQueue;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventQueue;
 
         bool m_isRunning;
         std::string mStorePath;

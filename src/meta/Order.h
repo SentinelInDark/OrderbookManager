@@ -38,14 +38,13 @@ namespace obm {
         [[nodiscard]] std::string getStatusStr() const;
         [[nodiscard]] std::string getSideStr() const;
         [[nodiscard]] std::string toString() const;
-        void decreaseCount(quantityType);
+        void decreaseQuantity(quantityType qty);
 
         orderIdType     m_orderId;
         OrderStatus     m_status;
         OrderSide       m_side;
         priceType       m_price;
         quantityType    m_quantity;
-        quantityType    m_leaves;
         std::chrono::system_clock::time_point   m_createTime;
     };
 

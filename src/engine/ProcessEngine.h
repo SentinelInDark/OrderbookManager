@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "../meta/Command.h"
-#include "../meta/EventWrapper.h"
+#include "../meta/Event.h"
 #include "../utils/MpscDoubleBufferQueue.h"
 #include "accountbook/BuyerAccountBook.h"
 #include "accountbook/SellerAccountBook.h"
@@ -17,7 +17,7 @@ namespace obm {
     class ProcessEngine {
     public:
         ProcessEngine(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>>,
-                      std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>>);
+                      std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>>);
         void initCommandActionMap();
         void run();
         void shutdown();
@@ -27,7 +27,7 @@ namespace obm {
     private:
         std::atomic<bool>   m_isRunning;
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> m_eventWrapperQueue;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventWrapperQueue;
 
         BuyerAccountBook m_buyerAccountBook;
         SellerAccountBook m_sellerAccountBook;

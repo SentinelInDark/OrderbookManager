@@ -35,12 +35,16 @@ namespace obm {
             if (!canTrade(candidateOrder, newOrderPtr)) {
                 break;
             }
-            auto qty = std::min(candidateOrder->m_leaves, newOrderPtr->m_leaves);
-            newOrderPtr->decreaseCount(qty);
-            candidateOrder->decreaseCount(qty);
-            if (candidateOrder->isFullyFilled()) {
-                this->remove(candidateOrder);
-            }
+            auto qty = std::min(candidateOrder->m_quantity, newOrderPtr->m_quantity);
+            newOrderPtr->decreaseQuantity(qty);
+            candidateOrder->decreaseQuantity(qty);
+
+            //Order ID=1 FullyFilled filledPrice=100 filledQty=2
+            //Order ID=5 PartiallyFilled filledPrice=100 filledQty=2 leaves 1@99
+//            auto msg = absl::StrFormat("Order ID=%ld PartiallyFilled filledPrice=%ld filledQty=%ld leaves %ld@%ld",
+//                                       m_orderId, m_price, qty, m_leaves, m_price);
+
+            this->cleanupOrder(candidateOrder);
             if (newOrderPtr->isFullyFilled()) {
                 break;
             }

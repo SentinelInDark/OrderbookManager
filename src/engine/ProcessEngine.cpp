@@ -8,7 +8,7 @@
 
 namespace obm {
     ProcessEngine::ProcessEngine(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> cmdQueue,
-                                 std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> evtQueue)
+                                 std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> evtQueue)
             : m_isRunning(false), m_commandQueue(std::move(cmdQueue)),
               m_eventWrapperQueue(std::move(evtQueue)) {
         initCommandActionMap();

@@ -7,7 +7,7 @@
 
 namespace obm {
     EventWarehouse::EventWarehouse(
-            const std::string &filePath, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> queue) :
+            const std::string &filePath, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> queue) :
             m_isRunning(false), m_eventWrapperQueue(std::move(queue)) {
         m_file.open(filePath.data(), std::ios::in | std::ios::out | std::ios::app);
     }
@@ -46,7 +46,7 @@ namespace obm {
         }
     }
 
-    void EventWarehouse::persist(const std::shared_ptr<EventWrapper>& eventPtr) {
+    void EventWarehouse::persist(const std::shared_ptr<Event>& eventPtr) {
 
     }
 } /// end namespace obm

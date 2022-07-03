@@ -7,14 +7,14 @@
 
 #include <fstream>
 #include <memory>
-#include "../meta/EventWrapper.h"
+#include "../meta/Event.h"
 #include "../utils/MpscDoubleBufferQueue.h"
 
 namespace obm {
 
     class EventWarehouse {
     public:
-        EventWarehouse(const std::string &, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>>);
+        EventWarehouse(const std::string &, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>>);
         ~EventWarehouse();
         EventWarehouse();
         EventWarehouse(const EventWarehouse &) = delete;
@@ -26,11 +26,11 @@ namespace obm {
         void shutdown();
     private:
         void doWork();
-        void persist(const std::shared_ptr<EventWrapper>&);
+        void persist(const std::shared_ptr<Event>&);
     private:
         std::fstream        m_file;
         std::atomic<bool>   m_isRunning;
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<EventWrapper>>> m_eventWrapperQueue;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventWrapperQueue;
     };
 
 } // obm
