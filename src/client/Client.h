@@ -13,16 +13,17 @@ namespace obm {
 
     class Client {
     public:
-        Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>>);
+        explicit Client(std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>>);
         ~Client() = default;
 
         static void printUsage() ;
         void run();
         void shutdown();
-        std::shared_ptr<Command> buildCommand(const std::string_view &);
 
     private:
-        bool validateCommand(const std::string&) const;
+        static void printPrompt() ;
+        void processCommand() const;
+        [[nodiscard]] std::shared_ptr<Command> buildCommand(const std::string_view &) const;
     private:
         std::atomic<bool> m_isRunning_;
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue_;

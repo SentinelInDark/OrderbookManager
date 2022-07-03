@@ -25,6 +25,12 @@ namespace obm {
         Command(Command &&) = delete;
         Command& operator=(const Command &) = delete;
         Command& operator=(Command &&) = delete;
+        std::string toString() const;
+    public:
+        static std::shared_ptr<Command> buildFromStr(const std::string_view&);
+    private:
+        static bool isPrintCommand(const std::string_view&);
+        static bool isTransactionCommand(const std::string_view&);
     private:
         CommandType             command_type_;
         std::unique_ptr<Order>  order_ptr_;

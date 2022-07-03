@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Client.h"
 #include "../logger/Logger.h"
-
+#include "../utils/StringUtils.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
 
@@ -20,36 +20,48 @@ namespace obm {
     }
 
     void Client::run() {
+        this->m_isRunning_ = true;
+        SPDLOG_INFO("Client thread is running.");
+        printUsage();
+        processCommand();
+    }
+
+    void Client::processCommand() const {
+        printPrompt();
+
         std::string inputCommandStr;
         while (getline(std::cin, inputCommandStr)) {
-            auto commandStr_v = absl::StripTrailingAsciiWhitespace(inputCommandStr);
-            if (commandStr_v.empty()) {
+            /// transform the command string to lowercase string
+            std::transform(inputCommandStr.begin(), inputCommandStr.end(), inputCommandStr.begin(),tolower);
+            auto command_sv = absl::StripTrailingAsciiWhitespace(removeRedundantSpace(inputCommandStr));
+            if (command_sv.empty()) {
                 continue;
             }
-            auto cmd = buildCommand(commandStr_v);
+            auto cmd = buildCommand(command_sv);
             if (cmd) {
                 m_commandQueue_->enqueue(cmd);
             }
+            printPrompt();
         }
     }
 
-    std::shared_ptr<Command> Client::buildCommand(const std::string_view &inputStr) {
-        return nullptr;
+    void Client::printPrompt() {
+        std::cout<<"> ";
     }
 
-    bool Client::validateCommand(const std::string&) const {
-        return true;
+    std::shared_ptr<Command> Client::buildCommand(const std::string_view &inputStr) const {
+        return Command::buildFromStr(inputStr);
     }
 
     void Client::printUsage() {
         std::cout
-                <<"usage: [New|Cancel|Replace] [orderId] [buy|sell] [quantity@price]\n"
-                <<"\nEx:\n"
-                <<"=====================================================\n"
-                <<"\tNew 1 buy 2@100\t\tNew 1 sell 2@100\n"
+                <<"\nusage: [New|Cancel|Replace] [orderId] [buy|sell] [quantity@price]\n"
+                <<"Ex:\n"
+                <<"===========================================================\n"
+                <<"\tNew 1 buy 2@100   \t\tNew 1 sell 2@100\n"
                 <<"\tCancel 1 buy 2@100\t\tCancel 1 sell 2@100\n"
-                <<"\tReplace 1 buy 2@100\t\tCancel 1 sell 2@100"
-                <<"====================================================="
+                <<"\tReplace 1 buy 2@100\t\tCancel 1 sell 2@100\n"
+                <<"==========================================================="
                 <<std::endl;
     }
 } /// end namespace obm

@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <string>
+#include <chrono>
 
 namespace obm {
     using quantityType = uint64_t;
@@ -26,11 +27,12 @@ namespace obm {
 
     class Order {
     private:
-        OrderStatus     status_;
-        OrderSide       side_;
-        std::string     price_;
-        quantityType    quantity_;
-        quantityType    leaves_;
+        OrderStatus     m_status_;
+        OrderSide       m_side_;
+        std::string     m_price_;
+        quantityType    m_quantity_;
+        quantityType    m_leaves_;
+        std::chrono::system_clock::time_point   m_createTime;
     };
 
 } /// end namespace obm

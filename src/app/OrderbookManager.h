@@ -10,6 +10,7 @@
 
 #include "../utils/MpscDoubleBufferQueue.h"
 #include "../meta/Command.h"
+#include "../client/Client.h"
 
 namespace obm /** orderbookmanager */{
     class OrderbookManager final {
@@ -21,8 +22,7 @@ namespace obm /** orderbookmanager */{
         OrderbookManager &operator=(const OrderbookManager &) = delete;
         OrderbookManager(OrderbookManager &&) = delete;
         OrderbookManager &operator=(OrderbookManager &&) = delete;
-//
-//        void init();
+
         void run();
 //        void shutdown();
 //
@@ -32,19 +32,19 @@ namespace obm /** orderbookmanager */{
 //        void startClientLoop();
 //
     private:
-        std::thread clientThread_;
+        std::thread m_clientThread_;
 //        std::thread mOrderProcessLoopThread;
 //        std::thread mEventStoreLoopThread;
 //
 //        std::unique_ptr<OrderProcessor> mOrderProcessorLoop;
 //        std::unique_ptr<EventStore> mEventStoreLoop;
-//        std::unique_ptr<Client> mClientLoop;
+        std::unique_ptr<Client> m_client_;
 //
-        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> commandQueue_;
+        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Command>>> m_commandQueue_;
 //        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<MatchEvent>>> mEventQueue;
 //        std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<MatchEvent>>> mReplyQueue;
 //
-//        bool mIsShutdown;
+        bool m_isRunning_;
 //        std::string mStorePath;
     };
 } /// end namespace obm
