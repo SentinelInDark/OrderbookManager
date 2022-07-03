@@ -14,7 +14,7 @@
 namespace obm {
     using orderIdType = uint64_t;
     using quantityType = uint64_t;
-    using priceType = uint64_t;
+    using priceType = uint64_t; /// TODO: price is BigDecimal
 
     struct Order {
         enum class OrderStatus {

@@ -14,32 +14,32 @@ namespace obm {
     class Command {
     public:
         enum class CommandType {
-            CREATE,
+            NEW,
             PRINT,
             CANCEL,
             REPLACE,
         };
     public:
-        Command(CommandType commandType, std::unique_ptr<Order> orderPtr) : command_type_(commandType), order_ptr_(std::move(orderPtr)){}
-        ~Command() = default;
+        Command(CommandType commandType, std::unique_ptr<Order> orderPtr);
+        ~Command();
         Command(const Command&) = delete;
         Command(Command &&) = delete;
         Command& operator=(const Command &) = delete;
         Command& operator=(Command &&) = delete;
-        std::string toString() const;
+        [[nodiscard]] std::string toString() const;
     public:
         static std::shared_ptr<Command> buildFromStr(const std::string_view&);
     private:
         static bool isPrintCommand(const std::string_view&);
         static bool isTransactionCommand(const std::string_view&);
     private:
-        CommandType             command_type_;
-        std::unique_ptr<Order>  order_ptr_;
+        CommandType             m_commandType_;
+        std::unique_ptr<Order>  m_orderPtr_;
 
         inline static const std::string PRINT_BOOK_STR = "print book";
 
         inline static const std::unordered_map<std::string_view, CommandType> cmdTypeMap{
-            {"new", CommandType::CREATE},
+            {"new", CommandType::NEW},
             {"cancel", CommandType::CANCEL},
             {"replace", CommandType::REPLACE}
         };

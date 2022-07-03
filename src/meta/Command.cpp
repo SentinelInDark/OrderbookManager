@@ -7,6 +7,13 @@
 
 namespace obm {
 
+    Command::Command(CommandType commandType, std::unique_ptr<Order> orderPtr) : m_commandType_(commandType), m_orderPtr_(std::move(orderPtr)){
+
+    }
+
+    Command::~Command() = default;
+
+    /// TODO: promote price type from integer to big decimal
     std::shared_ptr<Command> Command::buildFromStr(const std::string_view& sv) {
         if (isPrintCommand(sv)) {
             return std::make_shared<Command>(CommandType::PRINT, nullptr);
@@ -65,6 +72,18 @@ namespace obm {
     }
 
     std::string Command::toString() const {
-        return "";
+        if (m_commandType_ == CommandType::NEW) {
+            return "NEW";
+        }
+        if (m_commandType_ == CommandType::CANCEL) {
+            return "CANCEL";
+        }
+        if (m_commandType_ == CommandType::PRINT) {
+            return "print book";
+        }
+        if (m_commandType_ == CommandType::REPLACE) {
+            return "REPLACE";
+        }
+        return "unknown";
     }
 } /// end namespace obm
