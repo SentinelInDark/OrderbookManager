@@ -33,4 +33,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_CLIENT_H
+#endif // ORDERBOOKMANAGER_CLIENT_H
