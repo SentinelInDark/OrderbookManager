@@ -22,4 +22,4 @@ namespace obm {
     bool SellerAccountBook::canTrade(const std::shared_ptr<Order>& orderPtr, const std::shared_ptr<Order>& newOrderPtr) const {
         return orderPtr && orderPtr->m_price <= newOrderPtr->m_price;
     }
-} /// end namespace obm
+}  /// end namespace obm

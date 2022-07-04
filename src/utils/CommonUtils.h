@@ -12,6 +12,6 @@ namespace obm {
 
     void printPrompt();
 
-} // obm
+}  ///  end namespace obm
 
 #endif //ORDERBOOKMANAGER_COMMONUTILS_H

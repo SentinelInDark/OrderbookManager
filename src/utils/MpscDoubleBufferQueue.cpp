@@ -8,4 +8,4 @@ Order book explanation:
 #include "MpscDoubleBufferQueue.h"
 
 namespace obm /** orderbookmanager */{
-} /// end namespace obm
+}  ///  end namespace obm

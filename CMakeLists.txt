@@ -64,7 +64,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_SELF_CODE_CXX_FLAGS}")
 #set(CMAKE_CXX_COMPILER "g++-11")
 
 add_subdirectory(src)
-#add_subdirectory(tests)
+add_subdirectory(tests)
 
 file(GLOB_RECURSE SRC_LST "src/*.cpp" "src/*.h" "src/*.hpp" "src/*.cc")
 

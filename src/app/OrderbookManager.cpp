@@ -61,4 +61,4 @@ namespace obm {
         }
         m_eventWarehouse->shutdown();
     }
-} /// end namespace obm
+}  /// end namespace obm

@@ -135,8 +135,17 @@ namespace obm {
         this->m_commandActionMap[cmd->getCommandType()](cmd);
     }
 
+    /// For testing
+    std::shared_ptr<Order> ProcessEngine::getOrder(orderIdType orderId) {
+        auto ptr = m_sellerAccountBook.find(orderId);
+        if (!ptr) {
+            ptr = m_buyerAccountBook.find(orderId);
+        }
+        return ptr;
+    }
+
     void ProcessEngine::shutdown() {
         m_isRunning = false;
         SPDLOG_WARN("ProcessEngine is shutting down");
     }
-} /// end namespace obm
+}  /// end namespace obm

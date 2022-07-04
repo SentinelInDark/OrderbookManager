@@ -53,4 +53,4 @@ namespace obm {
 
         return std::make_shared<Event>(orderId, static_cast<OrderStatus>(status), static_cast<OrderSide>(side), price, quantity, filledQuantity);
     }
-} /// end namespace obm
+}  /// end namespace obm

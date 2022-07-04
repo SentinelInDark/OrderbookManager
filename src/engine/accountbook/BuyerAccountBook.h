@@ -26,6 +26,6 @@ namespace obm {
         bool canTrade(const std::shared_ptr<Order>&, const std::shared_ptr<Order>&) const override;
     };
 
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_BUYERACCOUNTBOOK_H

@@ -82,4 +82,4 @@ namespace obm {
         return absl::StrFormat("[orderId:%ld, side:%s, status:%s, price:%ld, quantity:%ld]",
                                m_orderId, getSideStr(), getStatusStr(), m_price, m_quantity);
     }
-} /// end namespace obm
+}  /// end namespace obm

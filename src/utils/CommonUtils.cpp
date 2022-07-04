@@ -13,4 +13,4 @@ namespace obm {
         std::cout<<"> ";
         std::cout.flush();
     }
-} /// end namespace obm
+}  ///  end namespace obm

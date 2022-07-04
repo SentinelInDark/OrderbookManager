@@ -68,4 +68,4 @@ namespace obm {
                 <<"================================================================="
                 <<std::endl;
     }
-} /// end namespace obm
+}  /// end namespace obm

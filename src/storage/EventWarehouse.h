@@ -27,9 +27,9 @@ namespace obm {
 
         void run();
         void shutdown();
+        void persist(const std::shared_ptr<Event>&);
     private:
         void doWork();
-        void persist(const std::shared_ptr<Event>&);
     private:
         std::atomic<bool>   m_isRunning;
         std::string         m_filePath;
@@ -37,6 +37,6 @@ namespace obm {
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventWrapperQueue;
     };
 
-} // obm
+}  ///  end namespaace obm
 
 #endif //ORDERBOOKMANAGER_EVENTWAREHOUSE_H

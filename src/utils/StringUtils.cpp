@@ -39,4 +39,4 @@ namespace obm {
         }
         return output;
     }
-} /// end namespace obm
+}  ///  end namespace obm

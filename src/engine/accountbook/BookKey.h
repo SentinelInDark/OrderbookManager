@@ -31,6 +31,6 @@ namespace obm {
         bool m_isBuyerBook;
     };
 
-} // obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_BOOKKEY_H

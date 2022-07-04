@@ -25,4 +25,4 @@ namespace obm {
             spdlog::set_default_logger(spdlog::rotating_logger_mt(LOGGER_NAME, file_name, FILE_SIZE, MAX_FILE_COUNT, true));
         }
     }
-} /// end namespace obm
+}  /// end namespace obm

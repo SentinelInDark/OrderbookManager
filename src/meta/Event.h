@@ -25,6 +25,6 @@ namespace obm {
         quantityType    m_filledQuantity;
     };
 
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_EVENT_H

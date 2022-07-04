@@ -59,4 +59,4 @@ namespace obm {
             m_file.sync();
         }
     }
-} /// end namespace obm
+}  ///  end namespace obm

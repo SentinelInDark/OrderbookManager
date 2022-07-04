@@ -59,6 +59,6 @@ namespace obm {
                 {"sell", obm::OrderSide::SELL}
         };
     };
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_COMMAND_H

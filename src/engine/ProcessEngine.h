@@ -12,6 +12,7 @@ Order book explanation:
 #include "../meta/Command.h"
 #include "../meta/Event.h"
 #include "../utils/MpscDoubleBufferQueue.h"
+#include "../utils/StringUtils.h"
 #include "accountbook/BuyerAccountBook.h"
 #include "accountbook/SellerAccountBook.h"
 
@@ -23,11 +24,12 @@ namespace obm {
                       std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>>);
         void run();
         void shutdown();
+        void processCommand(std::shared_ptr<Command>&);
+        std::shared_ptr<Order> getOrder(orderIdType);   /// For testing
     private:
         void initCommandActionMap();
         void rebuildState(const std::string &);
         void buildState(const std::shared_ptr<Event>&);
-        void processCommand(std::shared_ptr<Command>&);
         void deliveryEvents(const std::vector<std::shared_ptr<Event>>&);
 
     private:
@@ -42,6 +44,6 @@ namespace obm {
         std::unordered_map<Command::CommandType, std::function<void(std::shared_ptr<Command>)>> m_commandActionMap;
     };
 
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_PROCESSENGINE_H

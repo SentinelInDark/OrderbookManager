@@ -10,7 +10,7 @@ Order book explanation:
 #include "app/OrderbookManager.h"
 
 int main(int argc, char *argv[]) {
-    const char *default_args[] = {"stdout", "/tmp/data"};
+    const char *default_args[] = {"/tmp/orderbookManager.log", "/tmp/data"};
     obm::initLogger(argc > 1 ? argv[1] : default_args[0]);
 
     SPDLOG_INFO("OrderbookManager is running, pid={}", getpid());

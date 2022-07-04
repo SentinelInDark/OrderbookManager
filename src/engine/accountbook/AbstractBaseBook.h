@@ -45,6 +45,6 @@ namespace obm {
         std::unique_ptr<std::map<BookKey, std::shared_ptr<Order>, BookKeyComparator>> m_bookMapPtr;
     };
 
-} // obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_ABSTRACTBASEBOOK_H

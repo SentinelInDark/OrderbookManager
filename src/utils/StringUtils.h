@@ -17,6 +17,6 @@ namespace obm {
 std::string_view removeRedundantSpaceAndToLowerCase(std::string &);
 std::vector<std::string_view> split(std::string_view sv, char delim = ' ');
 
-} // obm
+}  ///  end namespace obm
 
 #endif //ORDERBOOKMANAGER_STRINGUTILS_H

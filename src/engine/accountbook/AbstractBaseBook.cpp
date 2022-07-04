@@ -191,4 +191,4 @@ namespace obm {
     BookKey AbstractBaseBook::buildBookKeyFromOrder(const std::shared_ptr<Order>& orderPtr) {
         return {orderPtr->m_orderId, orderPtr->m_price, orderPtr->m_createTime};
     }
-} /// end namespace obm
+}  /// end namespace obm

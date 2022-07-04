@@ -104,4 +104,4 @@ namespace obm {
         }
         return "unknown";
     }
-} /// end namespace obm
+}  /// end namespace obm

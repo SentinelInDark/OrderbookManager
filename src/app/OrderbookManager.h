@@ -20,7 +20,7 @@ Order book explanation:
 namespace obm /** orderbookmanager */{
     class OrderbookManager final {
     public:
-        OrderbookManager(const std::string &storePath);
+        explicit OrderbookManager(const std::string &storePath);
         ~OrderbookManager();
 
         OrderbookManager(const OrderbookManager &) = delete;
@@ -30,12 +30,6 @@ namespace obm /** orderbookmanager */{
 
         void run();
         void shutdown() const;
-//
-//    private:
-//        void startEventStoreLoop();
-//        void startOrderProcessLoop();
-//        void startClientLoop();
-//
     private:
         std::thread m_clientThread;
         std::thread m_commandProcessThread;
@@ -49,8 +43,8 @@ namespace obm /** orderbookmanager */{
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventQueue;
 
         bool m_isRunning;
-        std::string mStorePath;
+        std::string m_dataStorePath;
     };
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_ORDERBOOKMANAGER_H

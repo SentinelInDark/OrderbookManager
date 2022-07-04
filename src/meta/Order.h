@@ -53,6 +53,6 @@ namespace obm {
         std::chrono::system_clock::time_point   m_createTime;
     };
 
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_ORDER_H

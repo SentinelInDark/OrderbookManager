@@ -23,4 +23,4 @@ namespace obm {
 
     BookKey::BookKey(orderIdType orderId, priceType price, std::chrono::system_clock::time_point createTime) : orderId(
             orderId), price(price), createTime(createTime) {}
-} /// end namespace obm
+}  /// end namespace obm

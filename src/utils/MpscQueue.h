@@ -11,6 +11,7 @@ Order book explanation:
 #include <cstdint>
 #include <exception>
 
+/// copied from: https://github.com/eBay/Gringofts/tree/master/src/infra/mpscqueue
 namespace obm /*orderbookmanager*/{
 
     class QueueStoppedException : public ::std::exception {
@@ -65,6 +66,6 @@ namespace obm /*orderbookmanager*/{
         virtual void shutdown() = 0;
     };
 
-}  /// namespace obm
+}  ///  end namespace obm
 
 #endif //ORDERBOOKMANAGER_MPSCQUEUE_H

@@ -17,6 +17,7 @@ Order book explanation:
 
 #include "MpscQueue.h"
 
+/// copied from: https://github.com/eBay/Gringofts/tree/master/src/infra/mpscqueue
 namespace obm /*orderbookmanager*/{
     template<typename T>
     class MpscDoubleBufferQueue final : public MpscQueue<T> {
@@ -120,6 +121,6 @@ namespace obm /*orderbookmanager*/{
 
         return t;
     }
-} ///end namespace obm
+}  ///  end namespace obm
 
 #endif //ORDERBOOKMANAGER_MPSCDOUBLEBUFFERQUEUE_H

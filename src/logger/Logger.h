@@ -12,6 +12,6 @@ Order book explanation:
 
 namespace obm {
     void initLogger(const char*);
-} /// end namespace obm
+}  /// end namespace obm
 
 #endif //ORDERBOOKMANAGER_LOGGER_H
