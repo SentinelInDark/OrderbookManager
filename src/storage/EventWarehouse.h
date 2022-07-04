@@ -20,7 +20,6 @@ namespace obm {
     public:
         EventWarehouse(const std::string &, std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>>);
         ~EventWarehouse();
-        EventWarehouse();
         EventWarehouse(const EventWarehouse &) = delete;
         EventWarehouse(EventWarehouse &&) = delete;
         EventWarehouse& operator=(const EventWarehouse &) = delete;
