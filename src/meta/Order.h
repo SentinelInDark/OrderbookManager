@@ -36,6 +36,7 @@ namespace obm {
         [[nodiscard]] bool isSellerOrder() const;
         [[nodiscard]] bool canBeReplaced() const;
         [[nodiscard]] bool isFullyFilled() const;
+        [[nodiscard]] bool isNew() const;
         [[nodiscard]] std::string getStatusStr() const;
         [[nodiscard]] std::string getSideStr() const;
         [[nodiscard]] std::string toString() const;

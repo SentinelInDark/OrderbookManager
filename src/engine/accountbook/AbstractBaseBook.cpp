@@ -124,17 +124,45 @@ namespace obm {
         }
     }
 
-    void AbstractBaseBook::replace(const std::shared_ptr<Order>& orderPtr) {
-        BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
-        auto iter = m_bookMapPtr->find(key);
-        if (iter != m_bookMapPtr->end()) {
-
+    void AbstractBaseBook::replace(const std::shared_ptr<Order>& orderPtr, std::vector<std::shared_ptr<Event>> *pEvents) {
+        std::shared_ptr<Order> originalOrderPtr = this->find(orderPtr->m_orderId);
+        if (!originalOrderPtr) {
+            std::cout<<"Order ID = "<<orderPtr->m_orderId<<" does not exist."<<std::endl;
+            return;
+        }
+        if (originalOrderPtr->isNew()) {
+            this->remove(originalOrderPtr);
+            BookKey key = AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
+            m_bookMapPtr->try_emplace(key, orderPtr);
+            if (pEvents) {
+                originalOrderPtr->m_status = OrderStatus::CANCELED;
+                pEvents->push_back(std::make_shared<Event>(originalOrderPtr->m_orderId, originalOrderPtr->m_status, originalOrderPtr->m_side, originalOrderPtr->m_price, originalOrderPtr->m_quantity, 0));
+                pEvents->push_back(std::make_shared<Event>(orderPtr->m_orderId, orderPtr->m_status, orderPtr->m_side, orderPtr->m_price, orderPtr->m_quantity, 0));
+                std::cout<<"Order replaced, ID = "<<orderPtr->m_orderId<<std::endl;
+            }
+        } else {
+            std::cout<<"Order can not be replaced, ID = "<<orderPtr->m_orderId<<std::endl;
         }
     }
 
-    void AbstractBaseBook::cancel(std::shared_ptr<Order> orderPtr) {
+    ///TODO clarify cancellation logic
+    void AbstractBaseBook::cancel(const std::shared_ptr<Order>& orderPtr, std::vector<std::shared_ptr<Event>> *pEvents) {
         BookKey key = obm::AbstractBaseBook::buildBookKeyFromOrder(orderPtr);
-        //m_bookMapPtr->try_emplace(key, orderPtr);
+        std::shared_ptr<Order> originalOrderPtr = this->find(orderPtr);
+        if (!originalOrderPtr) {
+            std::cout<<"Order ID = "<<orderPtr->m_orderId<<" does not exist."<<std::endl;
+            return;
+        }
+        if (originalOrderPtr->isNew()) {
+            this->remove(key);
+            if (pEvents) {
+                originalOrderPtr->m_status = OrderStatus::CANCELED;
+                pEvents->push_back(std::make_shared<Event>(originalOrderPtr->m_orderId, originalOrderPtr->m_status, originalOrderPtr->m_side, originalOrderPtr->m_price, originalOrderPtr->m_quantity, 0));
+                std::cout<<"Order canceled, ID = "<<orderPtr->m_orderId<<std::endl;
+            }
+        } else {
+            std::cout<<"Order can not be canceled, ID = "<<orderPtr->m_orderId<<std::endl;
+        }
     }
 
     std::shared_ptr<Order> AbstractBaseBook::find(const std::shared_ptr<Order>& orderPtr) {
@@ -142,6 +170,16 @@ namespace obm {
         auto iter = m_bookMapPtr->find(key);
         if (iter != m_bookMapPtr->end()) {
             return iter->second;
+        }
+        return nullptr;
+    }
+
+    /// TODO : performance optimization
+    std::shared_ptr<Order> AbstractBaseBook::find(orderIdType orderId) const {
+        for (auto &iter : *m_bookMapPtr) {
+            if (iter.first.orderId == orderId) {
+                return iter.second;
+            }
         }
         return nullptr;
     }

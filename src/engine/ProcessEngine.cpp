@@ -71,34 +71,35 @@ namespace obm {
 
         /// CANCEL
         this->m_commandActionMap[Command::CommandType::CANCEL] = [this](const std::shared_ptr<Command>& cmd){
-            //TODO
+            auto newOrderPtr = cmd->getOrder();
+            SPDLOG_INFO("cancel order command: {}", newOrderPtr->toString());
+            std::vector<std::shared_ptr<Event>> events;
+            if (cmd->isBuyerCommand()) {
+                m_buyerAccountBook.cancel(newOrderPtr, &events);
+            } else if (cmd->isSellerCommand()) {
+                m_sellerAccountBook.cancel(newOrderPtr, &events);
+            } else {
+                assert(0);
+            }
+            printPrompt();
+            deliveryEvents(events);
         };
 
         /// REPLACE
+        /// TODO - replace order on other side (buy order -> sell order, sell order -> buy order)
         this->m_commandActionMap[Command::CommandType::REPLACE] = [this](const std::shared_ptr<Command>& cmd){
-            auto orderPtr = cmd->getOrder();
-            bool isBuyerOrder = false;
-            auto ptr = m_buyerAccountBook.find(orderPtr);
-            if (ptr) {
-                isBuyerOrder = true;
+            auto newOrderPtr = cmd->getOrder();
+            SPDLOG_INFO("replace order command: {}", newOrderPtr->toString());
+            std::vector<std::shared_ptr<Event>> events;
+            if (cmd->isBuyerCommand()) {
+                m_buyerAccountBook.replace(newOrderPtr, &events);
+            } else if (cmd->isSellerCommand()) {
+                m_sellerAccountBook.replace(newOrderPtr, &events);
             } else {
-                ptr = m_sellerAccountBook.find(orderPtr);
+                assert(0);
             }
-
-            if (!ptr) {
-                std::cout<<"Order "<<cmd->getOrder()->m_orderId<<" not found"<<std::endl;
-            } else {
-                if (ptr->canBeReplaced()) {
-                    if (isBuyerOrder) {
-                        m_buyerAccountBook.remove(orderPtr);
-                    } else {
-                        m_sellerAccountBook.remove(orderPtr);
-                    }
-                    m_commandActionMap[Command::CommandType::NEW](cmd);
-                } else {
-                    std::cout<<"Order "<<cmd->getOrder()->m_orderId<<"'s status is "<<orderPtr->getStatusStr()<<" can not be replaced"<<std::endl;
-                }
-            }
+            printPrompt();
+            deliveryEvents(events);
         };
     }
 

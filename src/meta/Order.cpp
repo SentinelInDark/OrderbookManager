@@ -32,6 +32,10 @@ namespace obm {
         return this->m_quantity == 0;
     }
 
+    bool Order::isNew() const {
+        return this->m_status == OrderStatus::NEW;
+    }
+
     void Order::decreaseQuantity(quantityType qty) {
         if (qty == 0) {
             return;

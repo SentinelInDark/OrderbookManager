@@ -22,9 +22,10 @@ namespace obm {
 
         void restore(const std::shared_ptr<Event> &);
         void add(std::shared_ptr<Order>, std::vector<std::shared_ptr<Event>> *);
-        void replace(const std::shared_ptr<Order>&);
-        void cancel(std::shared_ptr<Order>);
+        void replace(const std::shared_ptr<Order>&, std::vector<std::shared_ptr<Event>> *);
+        void cancel(const std::shared_ptr<Order>&, std::vector<std::shared_ptr<Event>> *pEvents);
         std::shared_ptr<Order> find(const std::shared_ptr<Order>&);
+        std::shared_ptr<Order> find(orderIdType) const;
         static BookKey buildBookKeyFromOrder(const std::shared_ptr<Order>&);
         void remove(BookKey &);
         void remove(const std::shared_ptr<Order>&);
