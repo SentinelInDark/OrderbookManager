@@ -2,15 +2,10 @@
 
 ## Installation
 
-```Prerequisite
+### Prerequisite
 1. install gcc-11
 2. install cmake with minum version 3.22
-```
-
-```sh
-1. Go to project directory
-2. Run the script ./scripts/addThirdParty.sh to install dependencies
-```
+3. go to project directory and run the script ./scripts/addThirdParty.sh to install dependencies
 
 ## Usage
 
