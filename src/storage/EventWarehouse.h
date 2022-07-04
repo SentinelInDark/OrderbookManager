@@ -10,7 +10,7 @@ Order book explanation:
 
 #include <fstream>
 #include <memory>
-#incluce <string>
+#include <string>
 #include "../meta/Event.h"
 #include "../utils/MpscDoubleBufferQueue.h"
 
