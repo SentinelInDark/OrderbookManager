@@ -1,6 +1,9 @@
-//
-// Created by Liam Zhang on 2022/7/2.
-//
+/************************************************************************
+Copyright @author.
+Implementation of order book management
+Order book explanation:
+    https://www.investopedia.com/terms/o/orderbook.asp
+**************************************************************************/
 
 #ifndef ORDERBOOKMANAGER_MPSCDOUBLEBUFFERQUEUE_H
 #define ORDERBOOKMANAGER_MPSCDOUBLEBUFFERQUEUE_H

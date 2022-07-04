@@ -1,6 +1,10 @@
-//
-// Created by Liam Zhang on 2022/7/2.
-//
+/************************************************************************
+Copyright @author.
+Implementation of order book management
+Order book explanation:
+    https://www.investopedia.com/terms/o/orderbook.asp
+**************************************************************************/
+
 #include <cstring>
 
 #include "spdlog/sinks/rotating_file_sink.h"
