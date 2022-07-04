@@ -14,4 +14,4 @@ namespace obm {
 
 }  ///  end namespace obm
 
-#endif //ORDERBOOKMANAGER_COMMONUTILS_H
+#endif // ORDERBOOKMANAGER_COMMONUTILS_H

@@ -68,4 +68,4 @@ namespace obm /*orderbookmanager*/{
 
 }  ///  end namespace obm
 
-#endif //ORDERBOOKMANAGER_MPSCQUEUE_H
+#endif // ORDERBOOKMANAGER_MPSCQUEUE_H

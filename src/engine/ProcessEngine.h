@@ -46,4 +46,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_PROCESSENGINE_H
+#endif // ORDERBOOKMANAGER_PROCESSENGINE_H

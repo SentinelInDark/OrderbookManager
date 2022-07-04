@@ -14,4 +14,4 @@ namespace obm {
     void initLogger(const char*);
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_LOGGER_H
+#endif // ORDERBOOKMANAGER_LOGGER_H

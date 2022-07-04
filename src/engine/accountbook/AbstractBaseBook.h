@@ -47,4 +47,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_ABSTRACTBASEBOOK_H
+#endif // ORDERBOOKMANAGER_ABSTRACTBASEBOOK_H

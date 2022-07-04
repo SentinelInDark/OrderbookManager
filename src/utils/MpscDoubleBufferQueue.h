@@ -123,4 +123,4 @@ namespace obm /*orderbookmanager*/{
     }
 }  ///  end namespace obm
 
-#endif //ORDERBOOKMANAGER_MPSCDOUBLEBUFFERQUEUE_H
+#endif // ORDERBOOKMANAGER_MPSCDOUBLEBUFFERQUEUE_H

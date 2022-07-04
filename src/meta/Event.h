@@ -27,4 +27,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_EVENT_H
+#endif // ORDERBOOKMANAGER_EVENT_H

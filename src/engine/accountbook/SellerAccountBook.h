@@ -28,4 +28,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_SELLERACCOUNTBOOK_H
+#endif // ORDERBOOKMANAGER_SELLERACCOUNTBOOK_H

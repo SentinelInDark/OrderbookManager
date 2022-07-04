@@ -55,4 +55,4 @@ namespace obm {
 
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_ORDER_H
+#endif // ORDERBOOKMANAGER_ORDER_H
