@@ -5,16 +5,15 @@ Order book explanation:
     https://www.investopedia.com/terms/o/orderbook.asp
 **************************************************************************/
 
-#include "Command.h"
-
 #include <utility>
+
+#include "Command.h"
 #include "../utils/StringUtils.h"
 #include "absl/strings/numbers.h"
 
 namespace obm {
 
-    Command::Command(CommandType commandType, std::shared_ptr<Order> orderPtr) : m_commandType(commandType), m_orderPtr(std::move(orderPtr)){
-
+    Command::Command(CommandType commandType, std::shared_ptr<Order> orderPtr) : m_commandType(commandType), m_orderPtr(std::move(orderPtr)) {
     }
 
     Command::~Command() = default;

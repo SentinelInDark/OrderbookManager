@@ -10,6 +10,7 @@ Order book explanation:
 
 #include <fstream>
 #include <memory>
+#incluce <string>
 #include "../meta/Event.h"
 #include "../utils/MpscDoubleBufferQueue.h"
 
@@ -37,6 +38,6 @@ namespace obm {
         std::shared_ptr<MpscDoubleBufferQueue<std::shared_ptr<Event>>> m_eventWrapperQueue;
     };
 
-}  ///  end namespaace obm
+}  ///  end namespace obm
 
-#endif //ORDERBOOKMANAGER_EVENTWAREHOUSE_H
+#endif // ORDERBOOKMANAGER_EVENTWAREHOUSE_H

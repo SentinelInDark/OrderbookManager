@@ -10,6 +10,7 @@ Order book explanation:
 
 #include <thread>
 #include <memory>
+#include <string>
 
 #include "../utils/MpscDoubleBufferQueue.h"
 #include "../meta/Command.h"
@@ -47,4 +48,4 @@ namespace obm /** orderbookmanager */{
     };
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_ORDERBOOKMANAGER_H
+#endif // ORDERBOOKMANAGER_ORDERBOOKMANAGER_H

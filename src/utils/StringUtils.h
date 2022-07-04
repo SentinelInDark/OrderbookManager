@@ -19,4 +19,4 @@ std::vector<std::string_view> split(std::string_view sv, char delim = ' ');
 
 }  ///  end namespace obm
 
-#endif //ORDERBOOKMANAGER_STRINGUTILS_H
+#endif // ORDERBOOKMANAGER_STRINGUTILS_H

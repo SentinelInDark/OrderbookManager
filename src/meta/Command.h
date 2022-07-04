@@ -10,6 +10,7 @@ Order book explanation:
 
 #include <unordered_map>
 #include <memory>
+#include <string>
 #include "Order.h"
 
 namespace obm {
@@ -24,7 +25,9 @@ namespace obm {
         };
     public:
         Command(CommandType commandType, std::shared_ptr<Order> orderPtr);
+
         ~Command();
+
         Command(const Command &) = delete;
         Command(Command &&) = delete;
         Command &operator=(const Command &) = delete;
@@ -61,4 +64,4 @@ namespace obm {
     };
 }  /// end namespace obm
 
-#endif //ORDERBOOKMANAGER_COMMAND_H
+#endif // ORDERBOOKMANAGER_COMMAND_H
